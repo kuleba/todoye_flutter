@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:todoye_flutter/models/task.dart';
 import 'package:todoye_flutter/widges/tasks_list.dart';
 
 import '../constants.dart';
 import 'add_task_screen.dart';
 
 
-class TasksScreen extends StatelessWidget {
+class TasksScreen extends StatefulWidget {
 
+  @override
+  State<TasksScreen> createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  List<Task> tasks = [
+    Task(name: 'Buy mikk'),
+    Task(name: 'Buy eggs'),
+
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +28,13 @@ class TasksScreen extends StatelessWidget {
           onPressed: (){
             showModalBottomSheet(
                 context: context,
-                builder: (context)=>AddTaskScreen());
+                builder: (context)=>AddTaskScreen((value){
+                  var newTask = Task(name: value);
+                  setState(() {
+                    tasks.add(newTask);
+                  });
+                  Navigator.pop(context);
+                }));
           },
           child: Icon(Icons.add),
         ),
@@ -50,7 +67,7 @@ class TasksScreen extends StatelessWidget {
                         fontWeight: FontWeight.w700),
                   ),
                   Text(
-                    '12 tasks',
+                    '${tasks.length} tasks',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -63,7 +80,7 @@ class TasksScreen extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 30),
                 decoration: containerCornerDecor,
-                child: TasksList(),
+                child: TasksList(tasks: tasks),
               ),
             )
           ],

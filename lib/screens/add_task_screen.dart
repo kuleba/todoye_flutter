@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  AddTaskScreen({Key? key, this.addNewTask}) : super(key: key);
-  Function()? addNewTask;
+  AddTaskScreen(this.addNewTask);
+  final Function addNewTask;
   String newTask='';
 
   @override
@@ -42,7 +42,9 @@ class AddTaskScreen extends StatelessWidget {
                 )
 
               ),
-              onPressed: addNewTask,
+              onPressed: (){
+                addNewTask(newTask);
+              },
 
             ),
           ],
