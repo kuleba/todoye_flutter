@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoye_flutter/models/tasks.dart';
 
 import '../constants.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  AddTaskScreen(this.addNewTask);
-  final Function addNewTask;
-  String newTask='';
+  String newTask = '';
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,6 @@ class AddTaskScreen extends StatelessWidget {
         decoration: containerCornerDecor,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-
           children: [
             Text(
               'Add Task',
@@ -26,26 +25,24 @@ class AddTaskScreen extends StatelessWidget {
             ),
             TextField(
               autofocus: true,
-                textAlign: TextAlign.center,
-                decoration: addTaskFieldDecor,
-                onChanged: (text) {
-                  newTask = text;
-                },
+              textAlign: TextAlign.center,
+              decoration: addTaskFieldDecor,
+              onChanged: (text) {
+                newTask = text;
+              },
             ),
             TextButton(
               child: Text('Add'),
               style: TextButton.styleFrom(
-                primary: Colors.white,
+                  primary: Colors.white,
                   backgroundColor: Colors.lightBlueAccent,
-                textStyle: TextStyle(
-                  fontSize: 18,
-                )
-
-              ),
-              onPressed: (){
-                addNewTask(newTask);
+                  textStyle: TextStyle(
+                    fontSize: 18,
+                  )),
+              onPressed: () {
+                Provider.of<Tasks>(context, listen: false).addTask(newTask);
+                Navigator.pop(context);
               },
-
             ),
           ],
         ),
